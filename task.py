@@ -70,43 +70,37 @@ def get_selected_items_list(items_dict, A=8):
                     break
     return selected_items, items_list
 
-
+# A=8, т.к. 9 элемент обязателен для моего варианта - ингалятор
 items_for_bag, items_list = get_selected_items_list(items_dict, 8)
 
-matrix = [[[''], [''], ['']], [[''], [''], ['']], [[''], [''], ['']]]
-
-
-
-
-j=0
-n=0
+i_l_copy = items_list.copy()
+i_f_b_copy = items_for_bag.copy()
+f = 3
+matrix = [[""] * f for i in range(3)]
+j = 0
+n = 0
 for i in range(3):
-    j=0
-    if i==0 and j==0:
-        matrix[0][0]=["i"]
-        j = 1
-    while j<3:
-        k=items_list[n][0]
-        for d in range(k):
-            matrix[i][j]=[items_for_bag[n]]
-            j+=1
-        n+=1
-# while len(items_for_bag) > 0:
-#     remaining_len = 0
-#     for i in range(3):
-#         for j in range(3):
-#             if matrix[i][j] != 'i':
-#                 if remaining_len == 0:
-#                     pass
-#                 else:
-#                     pass
+    j = 0
+    if i == 0 and j == 0:
+        matrix[0][0] = "i"
+        j += 1
+    while j < 3:
+        while i_l_copy[n][0] + j > 3:
+            n += 1
+        pr = i_l_copy.pop(n)
+        nb = i_f_b_copy.pop(n)
 
+        for d in range(pr[0]):
+            matrix[i][j] = nb
+            j += 1
+        n = 0
 for i in range(3):
     for j in range(3):
         if j != 2:
-            print(matrix[i][j], end=', ')
+            print('[', matrix[i][j], ']', end=', ')
         else:
-            print(matrix[i][j], end='\n')
+            print('[', matrix[i][j], ']', end='\n')
+
 
 survival_points = 20  # 15 изначальных + 5 за ингалятор
 for item in items_dict:
